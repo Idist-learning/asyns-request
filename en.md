@@ -1,15 +1,15 @@
 
 [Source](http://docs.guzzlephp.org/en/stable/quickstart.html "Permalink to Quickstart — Guzzle Documentation")
 
-# Quickstart — Guzzle Documentation
+# Bắt đầu nhanh — Guzzle Documentation
 
-This page provides a quick introduction to Guzzle and introductory examples. If you have not already installed, Guzzle, head over to the [Installation][1] page.
+Trang này cung cấp một phần giới thiệu ngắn về Guzzle và giới thiệu luôn về các ví dụ. Nếu bạn chưa từng cài đặt Guzzle trước đó, hãy xem qua trang [cài đặt][1].
 
-## Making a Request
+## Tạo một Request
 
-You can send requests with Guzzle using a `GuzzleHttpClientInterface` object.
+Bạn có thể gửi các request với Guzzle bằng cách sử dụng một đối tượng `GuzzleHttpClientInterface`.
 
-### Creating a Client
+### Tạo ra một Client
     
     
     use GuzzleHttpClient;
@@ -22,37 +22,37 @@ You can send requests with Guzzle using a `GuzzleHttpClientInterface` object.
     ]);
     
 
-Clients are immutable in Guzzle 6, which means that you cannot change the defaults used by a client after it's created.
+Các Client trong Guzzle 6 không thể thay đổi, có nghĩa mà bạn không thể chỉnh sửa các mặc định được sử dụng bởi client sau khi nó được tạo ra.
 
-The client constructor accepts an associative array of options:
+Phần khởi tạo client chấp nhận một mảng các tuỳ chọn liên kết:
 
-`base_uri`
-: 
 
-(string|UriInterface) Base URI of the client that is merged into relative URIs. Can be a string or instance of UriInterface. When a relative URI is provided to a client, the client will combine the base URI with the relative URI using the rules described in [RFC 3986, section 2][2].
+### `base_uri:` 
+
+(string|UriInterface) Base URI của một client là sự kết hợp từ các URI tương đối. Có thể là một string hoặc đại diện của UriInterface. Khi một URI tương đối được cung cấp tới client, client sẽ kết hợp base URI với URI tương đối bằng cách sử dụng các quy tắc được mô tả trong [RFC 3986, section 2][2].
     
     
-    // Create a client with a base URI
+    // Tạo một client với một base URI
     $client = new GuzzleHttpClient(['base_uri' => 'https://foo.com/api/']);
-    // Send a request to https://foo.com/api/test
+    // gửi một request tới https://foo.com/api/test
     $response = $client->request('GET', 'test');
-    // Send a request to https://foo.com/root
+    // Gửi một request tới https://foo.com/root
     $response = $client->request('GET', '/root');
     
 
-Don't feel like reading RFC 3986? Here are some quick examples on how a `base_uri` is resolved with another URI.
+Bạn cảm thấy không thích đọc RFC 3986? Đây là vài ví dụ nhỏ về `base_uri` đã giải quyết với các URI khác như thế nào.
 
-| base_uri              | URI              | Result                   |  
-| --------------------- | ---------------- | ------------------------ |  
-| `http://foo.com`      | `/bar`           | `http://foo.com/bar`     |  
-| `http://foo.com/foo`  | `/bar`           | `http://foo.com/bar`     |  
-| `http://foo.com/foo`  | `bar`            | `http://foo.com/bar`     |  
-| `http://foo.com/foo/` | `bar`            | `http://foo.com/foo/bar` |  
-| `http://foo.com`      | `http://baz.com` | `http://baz.com`         |  
-| `http://foo.com/?bar` | `bar`            | `http://foo.com/bar`     |  
+| base_uri              | URI              | Kết quả                   |  
+| --------------------- | ---------------- | ------------------------  |  
+| `http://foo.com`      | `/bar`           | `http://foo.com/bar`      |  
+| `http://foo.com/foo`  | `/bar`           | `http://foo.com/bar`      |  
+| `http://foo.com/foo`  | `bar`            | `http://foo.com/bar`      |  
+| `http://foo.com/foo/` | `bar`            | `http://foo.com/foo/bar`  |  
+| `http://foo.com`      | `http://baz.com` | `http://baz.com`          |  
+| `http://foo.com/?bar` | `bar`            | `http://foo.com/bar`      |  
 
-`handler`
-: (callable) Function that transfers HTTP requests over the wire. The function is called with a `Psr7HttpMessageRequestInterface` and array of transfer options, and must return a `GuzzleHttpPromisePromiseInterface` that is fulfilled with a `Psr7HttpMessageResponseInterface` on success. `handler` is a constructor only option that cannot be overridden in per/request options.
+### `handler:`
+ (Có thể gọi) Function that transfers HTTP requests over the wire. The function is called with a `Psr7HttpMessageRequestInterface` and array of transfer options, and must return a `GuzzleHttpPromisePromiseInterface` that is fulfilled with a `Psr7HttpMessageResponseInterface` on success. `handler` is a constructor only option that cannot be overridden in per/request options.
 
 `...`
 : (mixed) All other options passed to the constructor are used as default request options with every request created by the client.
