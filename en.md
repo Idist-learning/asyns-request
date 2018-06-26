@@ -378,11 +378,11 @@ Bạn có thể đặt `cookies` thành `true` trên phần khởi tạo của c
 
 ## Chuyển hướng
 
-Guzzle will automatically follow redirects unless you tell it not to. You can customize the redirect behavior using the `allow_redirects` request option.
+Guzzle sẽ tự động chuyển hướng nếu bạn không nói nó đừng làm vậy. Bạn có thể tuỳ chỉnh việc chuyển hướng bằng cách sử dụng tuỳ chọn `allow_redirect` request.
 
-* Set to `true` to enable normal redirects with a maximum number of 5 redirects. This is the default setting.
-* Set to `false` to disable redirects.
-* Pass an associative array containing the 'max' key to specify the maximum number of redirects and optionally provide a 'strict' key value to specify whether or not to use strict RFC compliant redirects (meaning redirect POST requests with POST requests vs. doing what most browsers do which is redirect POST requests with GET requests).
+* Đặt thành `true` để bật điều hướng bình thường với tối đa 5 lần. Đây là cài đặt mặc định.
+* Đặt thành `false` để tắt điều hướng.
+* Truyền một mảng liên kết với khoá `max` để mô tả số lần điều hướng tối đa và có thể cung cáp một giá trị khoá `strict` để áp dụng hoặc không các chuẩn điều hướng của RFC ( có nghĩa là điều hướng các POST request với POST request thưc hiện việc mà hầu hết các trình duyệt thực hiện như là chuyển hướng POST request với GET request).  
     
     
     $response = $client->request('GET', 'http://github.com');
@@ -390,7 +390,7 @@ Guzzle will automatically follow redirects unless you tell it not to. You can cu
     // 200
     
 
-The following example shows that redirects can be disabled.
+Ví dụ sau cho thấy việc redirect có thể được tắt đi.
     
     
     $response = $client->request('GET', 'http://github.com', [
@@ -402,11 +402,12 @@ The following example shows that redirects can be disabled.
 
 ## Ngoại lệ ( Exceptions )
 
-Guzzle throws exceptions for errors that occur during a transfer.
+Guzzle đưa ra các ngoại lệ cho những lỗi xảy ra trong khi truyền.
 
-* In the event of a networking error (connection timeout, DNS errors, etc.), a `GuzzleHttpExceptionRequestException` is thrown. This exception extends from `GuzzleHttpExceptionTransferException`. Catching this exception will catch any exception that can be thrown while transferring requests.
+* với Lỗi trên các sự kiện của mạng (hết thời gian kết nối, lỗi DNS, etc,...), một `GuzzleHttpExceptionRequestException` được đưa ra. ngoại lệ này kế thừa từ `GuzzleHttpExceptionTransferException`. Bắt ngoại lệ này sẽ bắt mọi ngoại lệ mà được đưa ra trong suốt quá trình truyền request. 
     
-        use GuzzleHttpPsr7;
+    
+    use GuzzleHttpPsr7;
     use GuzzleHttpExceptionRequestException;
     
     try {
@@ -419,8 +420,9 @@ Guzzle throws exceptions for errors that occur during a transfer.
     }
     
 
-* A `GuzzleHttpExceptionConnectException` exception is thrown in the event of a networking error. This exception extends from `GuzzleHttpExceptionRequestException`.
-* A `GuzzleHttpExceptionClientException` is thrown for 400 level errors if the `http_errors` request option is set to true. This exception extends from `GuzzleHttpExceptionBadResponseException` and `GuzzleHttpExceptionBadResponseException` extends from `GuzzleHttpExceptionRequestException`.
+* 1 ngoại lệ `GuzzleHttpExceptionConnectException` được ném ra trong trường hợp lỗi mạng. Ngoại lệ này extends từ `GuzzleHttpExceptionRequestException`.
+*  `GuzzleHttpExceptionClientException` được ném ra khi lỗi 400 nếu tùy chọn request `http_errors` được đặt thành `true`. Ngoại lệ này extends từ `GuzzleHttpExceptionBadResponseException` và `GuzzleHttpExceptionBadResponseException` kế thừa từ `GuzzleHttpExceptionRequestException`.
+    
     
         use GuzzleHttpExceptionClientException;
     
@@ -432,27 +434,25 @@ Guzzle throws exceptions for errors that occur during a transfer.
     }
     
 
-* A `GuzzleHttpExceptionServerException` is thrown for 500 level errors if the `http_errors` request option is set to true. This exception extends from `GuzzleHttpExceptionBadResponseException`.
-* A `GuzzleHttpExceptionTooManyRedirectsException` is thrown when too many redirects are followed. This exception extends from `GuzzleHttpExceptionRequestException`.
+* `GuzzleHttpExceptionServerException` được ném ra cho lỗi mức 500 nếu tùy chọn request `http_errors` được đặt thành true. Ngoại lệ này kế thừa từ `GuzzleHttpExceptionBadResponseException`.
+* `GuzzleHttpExceptionTooManyRedirectsException` sẽ được ném ra khi có quá nhiều lần điều hướng xảy ra. Ngoại lệ này kế thừa từ `GuzzleHttpExceptionRequestException`.
 
-All of the above exceptions extend from `GuzzleHttpExceptionTransferException`.
+Tất cả những ngoại lệ trên đều kế thừa từ `GuzzleHttpExceptionTransferException`.
 
 ## Các biến môi trường
 
-Guzzle exposes a few environment variables that can be used to customize the behavior of the library.
+guzzle cung cấp vài biến môi trường có thể sử udngj để tuỳ biến hành động của thư viện
 
-`GUZZLE_CURL_SELECT_TIMEOUT`
-: Controls the duration in seconds that a curl_multi_* handler will use when selecting on curl handles using `curl_multi_select()`. Some systems have issues with PHP's implementation of `curl_multi_select()` where calling this function always results in waiting for the maximum duration of the timeout.
+`GUZZLE_CURL_SELECT_TIMEOUT`: Điều khiển được thời gina bằng giây mà 1 hàm xử lý curl_multi_* sẽ sử dụng khi lựa chọn trên các xử lý của curl có sử dụng `curl_multi_select()`. Vài hệ thống có lỗi với việc thực hiện `curl_multi_select()` của PHP khi gọi hàm này luôn trả về kết quả bị quá thời gian chờ tối đa.
 
-`HTTP_PROXY`
-: 
+`HTTP_PROXY`: Định nghĩa proxy để sử dụng khi gửi request có sử dụng giao thức `http`.
 
-Defines the proxy to use when sending requests using the "http" protocol.
 
-Note: because the HTTP_PROXY variable may contain arbitrary user input on some (CGI) environments, the variable is only used on the CLI SAPI. See  for more information.
+
+Ghi chú: vì biến HTTP_PROXY có thể chứa đầu vào tùy ý từ người dùng trên 1 vài môi trường (CGI), nên nó chỉ được sử dụng trên CLI SAPI. Xem thêm thông tin sau đây.
 
 `HTTPS_PROXY`
-: Defines the proxy to use when sending requests using the "https" protocol.
+: Định nghĩa proxy được sử dụng khi gửi các request sử dụng giao thức "https".
 
 [1]: http://docs.guzzlephp.org/overview.html#installation
 [2]: http://tools.ietf.org/html/rfc3986#section-5.2
