@@ -22,9 +22,9 @@ Bạn có thể gửi các request với Guzzle bằng cách sử dụng một �
     ]);
     
 
-Các Client trong Guzzle 6 không thể thay đổi, có nghĩa mà bạn không thể chỉnh sửa các mặc định được sử dụng bởi client sau khi nó được tạo ra.
+Các Client trong Guzzle 6 không thể thay đổi, có nghĩa là bạn không thể chỉnh sửa các mặc định được sử dụng bởi client sau khi nó được tạo ra.
 
-Phần khởi tạo client chấp nhận một mảng các tuỳ chọn liên kết:
+Phần khởi tạo client chấp nhận một mảng liên kết các tuỳ chọn:
 
 
 ### `base_uri:` 
@@ -52,7 +52,7 @@ Bạn cảm thấy không thích đọc RFC 3986? Đây là vài ví dụ nhỏ 
 | `http://foo.com/?bar` | `bar`            | `http://foo.com/bar`      |  
 
 ### `handler:`
- (Có thể gọi) Tính năng gửi các yêu cầu HTTP thông qua mạng điện. Function này được gọi qua một `Psr7HttpMessageRequestInterface` và mảng các tuỳ chọn về cách truyền, và phải trả về một `GuzzleHttpPromisePromiseInterface` khi thành công và với một `Psr7HttpMessageResponseInterface` khi hoàn thành . `handler` chỉ là một tuỳ chọn khởi tạo mà không thể bị ghi đè trên mỗi tuỳ chọn request.
+ (Có thể gọi) Tính năng gửi các yêu cầu HTTP trên đường dẫn. Function này được gọi qua một `Psr7HttpMessageRequestInterface` và mảng các tuỳ chọn về cách truyền, và phải trả về một `GuzzleHttpPromisePromiseInterface` khi thành công và với một `Psr7HttpMessageResponseInterface` khi hoàn thành . `handler` là tuỳ chọn duy nhất của hàm khởi tạo mà không thể bị ghi đè trên mỗi tuỳ chọn request.
 
 `...`
 : (mixed) Tất cả các tuỳ chọn khác được truyền cho hàm khởi tạo đều được sử dụng như tuỳ chọn request mặc định đối với mọi request được tạo bởi client.
@@ -253,11 +253,11 @@ Phần nội dung của response có thể được lấy ra bằng cách sử d
     $remainingBytes = $body->getContents();
     
 
-## Query String Parameters
+## Tham số trong chuỗi query
 
-Bạn có thể cung cấp các tham số trong chuỗi truy vấn với một request với vài cách
+Bạn có thể cung cấp các tham số trong chuỗi query với một request với vài cách
 
-Bạn có thể đưa các tham số vào chuỗi truy vấn ngay trên URI request:
+Bạn có thể đưa các tham số vào chuỗi query  ngay trên URI request:
     
     
     $response = $client->request('GET', 'http://httpbin.org?foo=bar');
@@ -283,7 +283,7 @@ Và cuối cùng, bạn có thể cung cấp một tuỳ chọn request `query` 
 
 Guzzle cung cấp vài phương thức để tải lên dữ liệu.
 
-Bạn có thể gửi các request chứa một luồng dữ liệu bằng cách gửi qua một string, resourse trả về từ `fopen`, haowjc một thực thể cuả một `PsrHttpMessageStreamInterface` cho tuỳ chọn `body` request.
+Bạn có thể gửi các request chứa một luồng dữ liệu bằng cách gửi qua một string, resourse trả về từ `fopen`, hoặc một thực thể của một `PsrHttpMessageStreamInterface` cho tuỳ chọn `body` request.
     
     
     // Cung cấp phần nội dung như là một string
@@ -441,9 +441,9 @@ Tất cả những ngoại lệ trên đều kế thừa từ `GuzzleHttpExcepti
 
 ## Các biến môi trường
 
-guzzle cung cấp vài biến môi trường có thể sử udngj để tuỳ biến hành động của thư viện
+guzzle cung cấp vài biến môi trường có thể sử dụng để tuỳ biến hành động của thư viện
 
-`GUZZLE_CURL_SELECT_TIMEOUT`: Điều khiển được thời gina bằng giây mà 1 hàm xử lý curl_multi_* sẽ sử dụng khi lựa chọn trên các xử lý của curl có sử dụng `curl_multi_select()`. Vài hệ thống có lỗi với việc thực hiện `curl_multi_select()` của PHP khi gọi hàm này luôn trả về kết quả bị quá thời gian chờ tối đa.
+`GUZZLE_CURL_SELECT_TIMEOUT`: Điều khiển được thời gian bằng giây mà 1 hàm xử lý curl_multi_* sẽ sử dụng khi lựa chọn trên các xử lý của curl có sử dụng `curl_multi_select()`. Vài hệ thống có lỗi với việc thực hiện `curl_multi_select()` của PHP khi gọi hàm này luôn trả về kết quả bị quá thời gian chờ tối đa.
 
 `HTTP_PROXY`: Định nghĩa proxy để sử dụng khi gửi request có sử dụng giao thức `http`.
 
